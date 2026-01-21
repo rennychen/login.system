@@ -20,7 +20,7 @@ public class SHA256PasswordEncoder implements PasswordEncoder{
         return rawHash.equals(encodedPassword);
     }
 
-    public String bytesToHex(byte[] bytes){
+    private String bytesToHex(byte[] bytes){  //外部不需要使用,用private
         StringBuilder hexString = new StringBuilder();
         for(byte b:bytes){
             hexString.append(String.format("%02x",b));

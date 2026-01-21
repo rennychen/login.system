@@ -12,7 +12,7 @@ public class InMemoryUserRepository implements UserRepository{
 
     @Override
     public boolean existsByAccount(String userAccount){
-        return data.get(userAccount) != null // 或是 return data.containsKey(userAccount);
+        return data.get(userAccount) != null; // 或是 return data.containsKey(userAccount);
     }
 
     @Override

@@ -29,4 +29,24 @@ public class AuthService {
     private void checkPasswordPolicyCorrect(String password){
         passwordPolicy.validate(password);
     }
+
+    public void login(String account,String password){
+        User user = userRepository.findByAccount(account);
+        if(user == null){
+            throw new AccountNotFoundException("帳號不存在");
+        }
+
+        if(user.isLocked()){
+            throw new AccountLockedException("登入錯誤超過3次，帳號已鎖定");
+        }
+
+        boolean passwordMatch = passwordEncoder.matches(password,user.getPasswordHash());
+
+        if(!passwordMatch){ //登入失敗增加登入失敗次數
+            user.increaseFailedLoginAttempts();
+            throw new PasswordMismatchException("密碼錯誤!");
+        }
+
+        user.resetFailedLoginAttempts();
+    }
 }
