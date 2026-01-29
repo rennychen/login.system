@@ -30,7 +30,7 @@ public class AuthService {
         passwordPolicy.validate(password);
     }
 
-    public void login(String account,String password){
+    public User login(String account,String password){
         User user = userRepository.findByAccount(account);
         if(user == null){
             throw new AccountNotFoundException("帳號不存在");
@@ -48,5 +48,6 @@ public class AuthService {
         }
 
         user.resetFailedLoginAttempts();
+        return user;
     }
 }

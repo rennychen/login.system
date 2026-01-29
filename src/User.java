@@ -34,6 +34,6 @@ public class User {
     }
 
     public boolean isLocked(){
-        return failedLoginAttempts > MAX_FAILED_ATTEMPTS ;
+        return failedLoginAttempts >= MAX_FAILED_ATTEMPTS ;
     }
 }
