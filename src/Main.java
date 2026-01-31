@@ -5,9 +5,10 @@ public class Main{
 
         UserRepository repo = new InMemoryUserRepository();
         PasswordEncoder encoder = new SHA256PasswordEncoder();
-        PasswordPolicy policy = new DefaultPasswordPolicy();
+        PasswordPolicy passwordPolicy = new DefaultPasswordPolicy();
+        AccountPolicy accountPolicy = new DefaultAccountPolicy();
 
-        AuthService authService = new AuthService(repo,policy,encoder);
+        AuthService authService = new AuthService(repo,passwordPolicy,encoder,accountPolicy);
         LoginSession session = new LoginSession();
         Scanner scan = new Scanner(System.in);
 
@@ -41,18 +42,17 @@ public class Main{
                     System.out.println("請輸入正確的數字!");
                     break;
             }
-//            if(num.equals("0")){
-//                break;
-//            }
         }
     }
 
     //註冊
     private static void register(Scanner scan,AuthService authService){
         try{
+            System.out.println("帳號設置規則:帳號長度為6-20字,只能包含英文字母與數字,且不得使用數字做開頭。");
             System.out.print("請輸入帳號:");
             String account = scan.nextLine();
 
+            System.out.println("密碼設置規則:密碼長度8-16位數，且需包含至少1個英文大寫,1個英文小寫及數字組成。");
             System.out.print("請輸入密碼:");
             String password = scan.nextLine();
 

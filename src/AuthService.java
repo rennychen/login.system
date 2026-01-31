@@ -3,15 +3,18 @@ public class AuthService {
     private final UserRepository userRepository;
     private final PasswordPolicy passwordPolicy;
     private final PasswordEncoder passwordEncoder;
+    private final AccountPolicy accountPolicy;
 
-    public AuthService(UserRepository userRepository,PasswordPolicy passwordPolicy,PasswordEncoder passwordEncoder) {
+    public AuthService(UserRepository userRepository,PasswordPolicy passwordPolicy,PasswordEncoder passwordEncoder,AccountPolicy accountPolicy) {
         this.userRepository = userRepository;
         this.passwordPolicy = passwordPolicy;
         this.passwordEncoder = passwordEncoder;
+        this.accountPolicy = accountPolicy;
     }
 
     public void register(String account, String userName, String password) {
         checkAccountNotExists(account); //確認帳號是否存在
+        checkAccountPolicyCorrect(account); //確認帳號是否符合設置規範
         checkPasswordPolicyCorrect(password); //確認密碼設置是否符合規範
         String hashedPassword = passwordEncoder.encode(password); //密碼改成Hash
 
@@ -29,6 +32,8 @@ public class AuthService {
     private void checkPasswordPolicyCorrect(String password){
         passwordPolicy.validate(password);
     }
+
+    private void checkAccountPolicyCorrect(String account){ accountPolicy.validate(account); }
 
     public User login(String account,String password){
         User user = userRepository.findByAccount(account);
