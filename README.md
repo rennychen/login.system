@@ -64,6 +64,8 @@ src/
 
 ---
 
+## How to Run
+
 1. 下載專案  
    https://github.com/rennychen/login.system.git
 
